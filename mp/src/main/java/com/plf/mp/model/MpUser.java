@@ -28,7 +28,7 @@ public class MpUser {
     /**
      * 创建时间
      */
-    private String cratedAt;
+    private String createdAt;
 
     /**
      * 更新时间

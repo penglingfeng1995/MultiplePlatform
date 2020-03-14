@@ -29,4 +29,9 @@ public class UserServiceImpl implements UserService {
         }
         return new User(mpUser.getUsername(), mpUser.getPassword(), Collections.emptyList());
     }
+
+    @Override
+    public MpUser getMpUserByUsername(String username) {
+        return mpUserMapper.getUserByUsername(username);
+    }
 }

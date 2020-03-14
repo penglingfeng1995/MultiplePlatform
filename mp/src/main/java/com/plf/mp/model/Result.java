@@ -27,4 +27,9 @@ public class Result<T> {
      * 数据对象
      */
     private T data;
+
+    /**
+     * 头像url
+     */
+    private String avatar;
 }
