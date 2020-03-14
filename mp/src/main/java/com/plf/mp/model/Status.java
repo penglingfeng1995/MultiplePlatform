@@ -1,7 +1,5 @@
 package com.plf.mp.model;
 
-import lombok.Data;
-
 /**
  * @author plf
  */

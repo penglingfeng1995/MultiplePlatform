@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.plf.mp.mapper.MpUserMapper">
+    <insert id="addUser">
+        insert into t_mp_user(username, password, avatar, createdAt, updatedAt)
+            value (#{user.username}, #{user.password}, #{user.avatar}, #{user.createdAt}, #{user.updatedAt});
+    </insert>
     <select id="getUserByUsername" resultType="com.plf.mp.model.MpUser">
         select *
         from t_mp_user
