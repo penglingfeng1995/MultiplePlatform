@@ -1,0 +1,3 @@
+insert into t_mp_user(username, password, avatar, createdAt, updatedAt) value ('zs','$2a$10$eX0awSEW4YQS4NAONhjiFeq.3YHAq1dBqckwDGpgm2IoLUHfoK7zK','','','');
+insert into t_mp_user(username, password, avatar, createdAt, updatedAt) value ('ls','$2a$10$eX0awSEW4YQS4NAONhjiFeq.3YHAq1dBqckwDGpgm2IoLUHfoK7zK','','','');
+insert into t_mp_user(username, password, avatar, createdAt, updatedAt) value ('ww','$2a$10$eX0awSEW4YQS4NAONhjiFeq.3YHAq1dBqckwDGpgm2IoLUHfoK7zK','','','');
