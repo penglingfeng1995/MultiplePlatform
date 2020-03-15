@@ -86,7 +86,9 @@ class AuthControllerTest {
     }
 
     @Test
-    void register() {}
+    void register() {
+        System.out.println("测试 ci");
+    }
 
     @Test
     void logout() {}
