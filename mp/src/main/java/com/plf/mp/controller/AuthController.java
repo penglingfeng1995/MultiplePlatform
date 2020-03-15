@@ -42,7 +42,7 @@ public class AuthController {
     public Result<MpUser> auth() {
         Result<MpUser> result = new Result<>();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication instanceof AnonymousAuthenticationToken) {
+        if (authentication instanceof AnonymousAuthenticationToken || authentication == null) {
             result.setIsLogin(false);
         } else {
             String username = authentication.getName();

@@ -1,18 +1,20 @@
 package com.plf.mp.service.impl;
 
-import org.junit.jupiter.api.Assertions;
+import com.plf.mp.mapper.MpUserMapper;
+import com.plf.mp.model.MpUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.plf.mp.mapper.MpUserMapper;
-import com.plf.mp.model.MpUser;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
@@ -27,8 +29,8 @@ class UserServiceImplTest {
     @Test
     public void registerUser() {
 
-        Mockito.when(passwordEncoder.encode("123")).thenReturn("encode123");
-        Mockito.when(mpUserMapper.getUserByUsername("zzzzz")).thenReturn(null);
+        when(passwordEncoder.encode("123")).thenReturn("encode123");
+        when(mpUserMapper.getUserByUsername("zzzzz")).thenReturn(null);
 
         MpUser mpUser = new MpUser();
         mpUser.setUsername("zzzzz");
@@ -40,8 +42,8 @@ class UserServiceImplTest {
         userVerify.setPassword("encode123");
         userVerify.setAvatar(
             "http://thirdwx.qlogo.cn/mmopen/vi_32/LfSgq4vwXMtH1bYIslr8fW28Q9H5qboYQhfGjIlfxXJudpekjof2OYZARjOjpfQjekiceSzIXDicoSFy7dp11zIA/132");
-        Mockito.verify(mpUserMapper).getUserByUsername("zzzzz");
-        Mockito.verify(mpUserMapper).addUser(userVerify);
+        verify(mpUserMapper).getUserByUsername("zzzzz");
+        verify(mpUserMapper).addUser(userVerify);
     }
 
     @Test
@@ -49,12 +51,12 @@ class UserServiceImplTest {
 
         userService.getMpUserByUsername("zzz");
 
-        Mockito.verify(mpUserMapper).getUserByUsername("zzz");
+        verify(mpUserMapper).getUserByUsername("zzz");
     }
 
     @Test
     void loadUserByUsernameException() {
-        Assertions.assertThrows(UsernameNotFoundException.class, () -> userService.loadUserByUsername("zzz"));
+        assertThrows(UsernameNotFoundException.class, () -> userService.loadUserByUsername("zzz"));
     }
 
     @Test
@@ -62,9 +64,9 @@ class UserServiceImplTest {
         MpUser mockUser= new MpUser();
         mockUser.setUsername("zzz");
         mockUser.setPassword("encode123");
-        Mockito.when(mpUserMapper.getUserByUsername("zzz")).thenReturn(mockUser);
+        when(mpUserMapper.getUserByUsername("zzz")).thenReturn(mockUser);
         UserDetails userDetails = userService.loadUserByUsername("zzz");
-        Assertions.assertEquals("zzz",userDetails.getUsername());
-        Assertions.assertEquals("encode123",userDetails.getPassword());
+        assertEquals("zzz",userDetails.getUsername());
+        assertEquals("encode123",userDetails.getPassword());
     }
 }
