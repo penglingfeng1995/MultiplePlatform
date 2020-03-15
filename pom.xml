@@ -57,6 +57,10 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
             <!--单元测试-->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
