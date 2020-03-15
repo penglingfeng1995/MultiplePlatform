@@ -13,7 +13,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,22 +66,18 @@ public class AuthController {
         String username = mpUser.getUsername();
         String password = mpUser.getPassword();
 
-        UserDetails userDetails;
-        try {
-            userDetails = userService.loadUserByUsername(username);
-        } catch (UsernameNotFoundException e) {
-            log.error("用户名不存在:" + username);
-            result.setStatus(Status.FAIL.getCode());
-            result.setMsg("用户不存在");
-            return result;
-        }
         UsernamePasswordAuthenticationToken token =
-            new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+            new UsernamePasswordAuthenticationToken(username, password, Collections.emptyList());
 
         try {
             authenticationManager.authenticate(token);
             SecurityContextHolder.getContext().setAuthentication(token);
 
+        }catch (UsernameNotFoundException e) {
+            log.error("用户名不存在:" + username);
+            result.setStatus(Status.FAIL.getCode());
+            result.setMsg("用户不存在");
+            return result;
         } catch (BadCredentialsException e) {
             log.error("密码错误,该用户名:" + username);
             result.setStatus(Status.FAIL.getCode());
