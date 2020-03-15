@@ -1,8 +1,10 @@
 package com.plf.mp.service.impl;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
-
+import com.plf.mp.exception.RegisterException;
+import com.plf.mp.mapper.MpUserMapper;
+import com.plf.mp.model.MpUser;
+import com.plf.mp.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -11,12 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.plf.mp.exception.RegisterException;
-import com.plf.mp.mapper.MpUserMapper;
-import com.plf.mp.model.MpUser;
-import com.plf.mp.service.UserService;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.Collections;
 
 /**
  * @author plf
@@ -58,8 +55,6 @@ public class UserServiceImpl implements UserService {
         mpUser.setPassword(passwordEncoder.encode(mpUser.getPassword()));
         mpUser.setAvatar(
             "http://thirdwx.qlogo.cn/mmopen/vi_32/LfSgq4vwXMtH1bYIslr8fW28Q9H5qboYQhfGjIlfxXJudpekjof2OYZARjOjpfQjekiceSzIXDicoSFy7dp11zIA/132");
-        mpUser.setCreatedAt(LocalDateTime.now().toString());
-        mpUser.setUpdatedAt(LocalDateTime.now().toString());
         mpUserMapper.addUser(mpUser);
     }
 }
