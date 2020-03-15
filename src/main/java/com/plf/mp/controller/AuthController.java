@@ -79,7 +79,7 @@ public class AuthController {
             result.setMsg("用户不存在");
             return result;
         } catch (BadCredentialsException e) {
-            log.error("密码错误,该用户名:" + username);
+            log.error("密码错误,该用户名a:" + username);
             result.setStatus(Status.FAIL.getCode());
             result.setMsg("密码不正确");
             return result;
