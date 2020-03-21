@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.plf.mp.mapper.BlogMapper">
+
+    <resultMap id="blog" type="com.plf.mp.model.Blog">
+        <id column="blogId" property="id"/>
+        <result column="title" property="title"/>
+        <result column="description" property="description"/>
+        <result column="content" property="content"/>
+        <result column="createdAt" property="createdAt"/>
+        <result column="updatedAt" property="updatedAt"/>
+        <association property="user" javaType="com.plf.mp.model.MpUser">
+            <result column="userId" property="id"/>
+            <result column="username" property="username"/>
+            <result column="avatar" property="avatar"/>
+        </association>
+    </resultMap>
+
+    <insert id="addBlog">
+        insert into t_blog(title, description, content, refer_id, createdAt, updatedAt, atIndex)
+        VALUES (#{blog.title}, #{blog.description}, #{blog.content}, #{userId}, now(), now(), #{blog.atIndex});
+    </insert>
+    <update id="updateBlog">
+        update t_blog
+        set title=#{blog.title},
+            description=#{blog.description},
+            content=#{blog.content},
+            atIndex=#{blog.atIndex}
+        where id = #{blogId};
+    </update>
+    <delete id="deleteBlogById">
+        delete
+        from t_blog
+        where id = #{blogId}
+    </delete>
+
+    <select id="getTotal" resultType="java.lang.Integer">
+        select count(*)
+        from t_blog
+        join t_mp_user on t_blog.refer_id = t_mp_user.id
+        <where>
+            <if test="atIndex!=null">
+                atIndex = #{atIndex}
+            </if>
+            <if test="userId!=null">
+                and refer_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getBlogList" resultMap="blog">
+        select t_blog.id blogId,
+        t_blog.title,
+        t_blog.description,
+        t_blog.content,
+        t_blog.createdAt,
+        t_blog.updatedAt,
+        t_mp_user.id userId,
+        t_mp_user.username,
+        t_mp_user.avatar
+        from t_blog
+        join t_mp_user on t_blog.refer_id = t_mp_user.id
+        <where>
+            <if test="atIndex!=null">
+                atIndex = #{atIndex}
+            </if>
+            <if test="userId!=null">
+                and refer_id = #{userId}
+            </if>
+        </where>
+        limit #{start},#{size};
+    </select>
+    <select id="getBlogById" resultMap="blog">
+        select t_blog.id    blogId,
+               t_blog.title,
+               t_blog.description,
+               t_blog.content,
+               t_blog.createdAt,
+               t_blog.updatedAt,
+               t_mp_user.id userId,
+               t_mp_user.username,
+               t_mp_user.avatar
+        from t_blog
+                 join t_mp_user on t_blog.refer_id = t_mp_user.id
+        where t_blog.id = #{blogId}
+    </select>
+</mapper>

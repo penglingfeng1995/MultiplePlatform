@@ -1,7 +1,10 @@
 package com.plf.mp.service.impl;
 
-import com.plf.mp.mapper.MpUserMapper;
-import com.plf.mp.model.MpUser;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,10 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import com.plf.mp.mapper.MpUserMapper;
+import com.plf.mp.model.MpUser;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
@@ -61,12 +62,12 @@ class UserServiceImplTest {
 
     @Test
     void loadUserByUsername() {
-        MpUser mockUser= new MpUser();
+        MpUser mockUser = new MpUser();
         mockUser.setUsername("zzz");
         mockUser.setPassword("encode123");
         when(mpUserMapper.getUserByUsername("zzz")).thenReturn(mockUser);
         UserDetails userDetails = userService.loadUserByUsername("zzz");
-        assertEquals("zzz",userDetails.getUsername());
-        assertEquals("encode123",userDetails.getPassword());
+        assertEquals("zzz", userDetails.getUsername());
+        assertEquals("encode123", userDetails.getPassword());
     }
 }

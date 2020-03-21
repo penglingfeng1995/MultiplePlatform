@@ -1,10 +1,7 @@
 package com.plf.mp.service.impl;
 
-import com.plf.mp.exception.RegisterException;
-import com.plf.mp.mapper.MpUserMapper;
-import com.plf.mp.model.MpUser;
-import com.plf.mp.service.UserService;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Collections;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -13,7 +10,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import com.plf.mp.exception.RegisterException;
+import com.plf.mp.mapper.MpUserMapper;
+import com.plf.mp.model.MpUser;
+import com.plf.mp.service.UserService;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author plf

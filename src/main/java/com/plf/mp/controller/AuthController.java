@@ -35,7 +35,7 @@ public class AuthController {
     /**
      * 判断是否登录
      * 
-     * @return
+     * @return 登录状态
      */
     @GetMapping
     public Result<MpUser> auth() {
@@ -58,7 +58,8 @@ public class AuthController {
      * 登录
      * 
      * @param mpUser
-     * @return
+     *            用户实体
+     * @return 用户信息
      */
     @PostMapping("/login")
     public Result<MpUser> login(@RequestBody MpUser mpUser) {
@@ -73,7 +74,7 @@ public class AuthController {
             authenticationManager.authenticate(token);
             SecurityContextHolder.getContext().setAuthentication(token);
 
-        }catch (UsernameNotFoundException e) {
+        } catch (UsernameNotFoundException e) {
             log.error("用户名不存在:" + username);
             result.setStatus(Status.FAIL.getCode());
             result.setMsg("用户不存在");
@@ -96,7 +97,8 @@ public class AuthController {
      * 注册
      * 
      * @param mpUser
-     * @return
+     *            用户实体
+     * @return 用户信息
      */
     @PostMapping("/register")
     public Result<MpUser> register(@RequestBody MpUser mpUser) {
@@ -125,11 +127,11 @@ public class AuthController {
     /**
      * 注销
      * 
-     * @return
+     * @return 注销成功
      */
     @GetMapping("/logout")
-    public Result logout() {
-        Result result = new Result();
+    public Result<Object> logout() {
+        Result<Object> result = new Result<>();
         result.setStatus(Status.FAIL.getCode());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof AnonymousAuthenticationToken) {

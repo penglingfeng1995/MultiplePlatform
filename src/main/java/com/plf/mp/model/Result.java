@@ -32,4 +32,16 @@ public class Result<T> {
      * 头像url
      */
     private String avatar;
+    /**
+     * 博客总数
+     */
+    private Integer total;
+    /**
+     * 当前页数
+     */
+    private Integer page;
+    /**
+     * 总页数
+     */
+    private Integer totalPage;
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.plf.mp.mapper.MpUserMapper">
     <insert id="addUser">
         insert into t_mp_user(username, password, avatar, createdAt, updatedAt)
-        value (#{user.username}, #{user.password}, #{user.avatar}, now(), now());
+            value (#{user.username}, #{user.password}, #{user.avatar}, now(), now());
     </insert>
     <select id="getUserByUsername" resultType="com.plf.mp.model.MpUser">
         select *

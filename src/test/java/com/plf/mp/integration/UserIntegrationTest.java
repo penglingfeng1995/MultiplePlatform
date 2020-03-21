@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 public class UserIntegrationTest {
     @Test
-    public void test1(){
+    public void test1() {
 
     }
 }
