@@ -1,16 +1,8 @@
 package com.plf.mp.controller;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.plf.mp.model.MpUser;
+import com.plf.mp.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,9 +21,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.plf.mp.model.MpUser;
-import com.plf.mp.service.UserService;
+import javax.servlet.http.HttpSession;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
@@ -72,7 +70,6 @@ class AuthControllerTest {
         String responseBody = new ObjectMapper().writeValueAsString(userPwd);
 
         User user = new User("myUser", passwordEncoder.encode("myPwd"), Collections.emptyList());
-        when(userService.loadUserByUsername("myUser")).thenReturn(user);
         MpUser mpUser = new MpUser();
         mpUser.setUsername("myUser");
         when(userService.getMpUserByUsername("myUser")).thenReturn(mpUser);
