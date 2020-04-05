@@ -19,7 +19,7 @@ public class EncoderTest {
 
     @Test
     public void test1() {
-        String encode = passwordEncoder.encode("123");
+        String encode = passwordEncoder.encode("qqqq");
         // $2a$10$eX0awSEW4YQS4NAONhjiFeq.3YHAq1dBqckwDGpgm2IoLUHfoK7zK
         log.info(encode);
     }
