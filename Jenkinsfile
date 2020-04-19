@@ -9,30 +9,22 @@ pipeline {
       }
       stage('build project') {
          steps {
-            sh 'mvn clean package -Dmaven.test.skip=true'
+            sh 'mvn clean package -Dmaven.test.skip=true docker:build'
          }
       }
-      stage('sonar project') {
-           steps {
-              script{
-              //这里设置jenkins全局工具里设置的scanner名称
-                scannerHome = tool 'sonar1'
-              }
-              //这里设置系统设置的 sonar server 的名称
-              withSonarQubeEnv('sonar'){
-                sh "${scannerHome}/bin/sonar-scanner"
-              }
-           }
+      stage('upload image'){
+        steps{
+            sh 'docker tag mp:latest 192.168.80.129:83/mp/mp:latest'
+            sh 'docker login -u admin -p Harbor12345 192.168.80.129:83'
+            sh 'docker push 192.168.80.129:83/mp/mp:latest'
         }
-      stage('start project') {
-            steps {
-              sh '''cp target/mp-1.0-SNAPSHOT.jar /app
-              cd /app
-              sh stop.sh
-              BUILD_ID=dontKillMe
-              sh start.sh
-              '''
-            }
-       }
+      }
+      stage('start project'){
+        steps{
+            sh 'sshpass -p "123456" ssh root@192.168.80.129 "docker pull 192.168.80.129:83/mp/mp:latest"'
+            sh 'sshpass -p "123456" ssh root@192.168.80.129 "docker run -p8083:8083 -d 192.168.80.129:83/mp/mp:latest"'
+        }
+      }
+
    }
 }
